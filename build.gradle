@@ -1,0 +1,67 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.4.30'
+        coroutinesVersion = '1.4.3'
+        springBootVersion = '2.0.4.RELEASE'
+        swaggerVersion = '2.7.0'
+        jacksonKotlinVersion = '2.9.6'
+
+        junitVersion = '5.8.0'
+        guavaRetryingVersion = '2.0.0'
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.30'
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
+}
+
+group = 'com.robinbobin.test'
+version = '0.0.1'
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = 'tests-demo-service'
+            version = '0.0.1'
+            group = 'com.robinbobin.test'
+            name = 'tests-demo-service'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonKotlinVersion"
+    implementation "io.springfox:springfox-swagger2:$swaggerVersion"
+    implementation "io.springfox:springfox-swagger-ui:$swaggerVersion"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
+    testImplementation "com.github.rholder:guava-retrying:$guavaRetryingVersion"
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+bootJar {
+    archiveFileName = "tests-demo-service.jar"
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

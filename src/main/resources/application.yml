@@ -1,0 +1,13 @@
+spring.application.name: test-demo-service
+
+demo-service:
+    test-data:
+      example-person:
+        phone: 78008008080
+        fio: Иванов Иван Иванович
+        birth-date: 01.01.1970
+    auth:
+      token: 296630060b6ab7837ce25eb83095bc52
+    auth-token: 296630060b6ab7837ce25eb83095bc52
+
+server.port: 8080
