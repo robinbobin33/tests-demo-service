@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController
 import com.robinbobin.test.exception.PersonNotFoundException
 import com.robinbobin.test.exception.UnauthorizedException
 import com.robinbobin.test.model.Person
+import com.robinbobin.test.model.PersonQueueStatus
+import com.robinbobin.test.model.response.AddPersonAsyncResponse
+import com.robinbobin.test.model.response.GetPersonQueueStatusResponse
 import com.robinbobin.test.service.auth.AuthService
 import com.robinbobin.test.service.auth.PersonService
 import javax.validation.Valid
@@ -37,9 +40,23 @@ class PersonController(
     fun addPersonAsync(
         @RequestHeader("Authorization") authToken: String,
         @Valid @RequestBody person: Person
-    ) {
+    ): AddPersonAsyncResponse {
         authService.checkToken(authToken)
-        return personService.addPerson(person)
+        return personService.addPersonAsync(person)
+    }
+
+    @GetMapping("/async/{queueId}")
+    fun addPersonQueueStatus(
+        @RequestHeader("Authorization") authToken: String,
+        @PathVariable queueId: String
+    ): GetPersonQueueStatusResponse {
+        authService.checkToken(authToken)
+        val status = personService.getPersonQueueStatus(queueId)
+        return when (status) {
+            is PersonQueueStatus.Success -> GetPersonQueueStatusResponse(queueId, "Success")
+            is PersonQueueStatus.InProgress -> GetPersonQueueStatusResponse(queueId, "InProgress")
+            is PersonQueueStatus.Failure -> GetPersonQueueStatusResponse(queueId, "Failure", status.reason)
+        }
     }
 
     @GetMapping("/{phone}")

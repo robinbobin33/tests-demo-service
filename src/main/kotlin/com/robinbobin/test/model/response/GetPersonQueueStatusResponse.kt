@@ -4,5 +4,6 @@ import com.robinbobin.test.model.PersonQueueStatus
 
 data class GetPersonQueueStatusResponse(
     val queueId: String,
-    val status: PersonQueueStatus
+    val status: String,
+    val message: String? = null
 )
