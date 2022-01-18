@@ -8,6 +8,5 @@ demo-service:
         birth-date: 01.01.1970
     auth:
       token: 296630060b6ab7837ce25eb83095bc52
-    auth-token: 296630060b6ab7837ce25eb83095bc52
 
 server.port: 8080
